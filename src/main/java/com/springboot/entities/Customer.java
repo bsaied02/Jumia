@@ -1,5 +1,7 @@
 package com.springboot.entities;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -45,5 +47,22 @@ public class Customer {
         ", name='" + name + '\'' +
         ", phone='" + phone + '\'' +
         '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+    Customer customer = (Customer) o;
+    return id.equals(customer.id) &&
+        name.equals(customer.name) &&
+        phone.equals(customer.phone);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name, phone);
   }
 }

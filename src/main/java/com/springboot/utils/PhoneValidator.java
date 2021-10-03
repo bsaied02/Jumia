@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotNull;
 
@@ -54,8 +55,27 @@ public class PhoneValidator {
     return countryPropertiesList.stream()
         .filter(countryProperty -> {
           String phoneCode = StringUtils.substringBetween(phone, "(", ")");
-          return Objects.equals(countryProperty.getCountryCode(), phoneCode);
+          String countryCode = countryProperty.getCountryCode().replaceAll("[^0-9]", "");
+          return Objects.equals(countryCode, phoneCode);
         })
         .findFirst();
+  }
+
+  public static Optional<CountryProperties> getCountryByCountryName(@NotNull String countryName) {
+    return countryPropertiesList.stream()
+        .filter(countryProperty -> Objects.equals(countryProperty.getCountry(), countryName))
+        .findFirst();
+  }
+
+  public static List<String> getAllCountriesNames() {
+    return countryPropertiesList.stream()
+        .map(CountryProperties::getCountry)
+        .collect(Collectors.toList());
+  }
+
+  public static List<String> getAllCountriesRegex() {
+    return countryPropertiesList.stream()
+        .map(CountryProperties::getRegex)
+        .collect(Collectors.toList());
   }
 }
