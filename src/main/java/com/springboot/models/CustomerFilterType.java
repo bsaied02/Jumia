@@ -1,4 +1,4 @@
-package com.springboot.model;
+package com.springboot.models;
 
 public enum CustomerFilterType {
   PHONE,COUNTRY

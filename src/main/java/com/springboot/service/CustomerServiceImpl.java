@@ -12,20 +12,24 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.springboot.dao.CustomerDao;
-import com.springboot.entities.Customer;
-import com.springboot.model.CustomerFilter;
+import com.springboot.models.CustomerFilter;
+import com.springboot.models.CustomerModel;
 
 @Service
-public class CustomerService implements ICustomerService {
+public class CustomerServiceImpl implements ICustomerService {
 
   @Autowired
   private CustomerDao customerDao;
 
+  @Autowired
+  private CustomerMapper mapper;
+
   @Override
-  public Page<Customer> getSortedCustomers(@NotNull CustomerFilter filter) {
+  public Page<CustomerModel> getSortedCustomers(@NotNull CustomerFilter filter) {
     Sort sort = Optional.ofNullable(filter.getCustomerSort()).orElse(Sort.unsorted());
-    Pageable pageable = PageRequest.of(filter.getPageIndex(), filter.getOffset(), sort);
-    return customerDao.findAll(pageable);
+    Pageable pageable = PageRequest.of(filter.getPageIndex(), filter.getItemsPerPage(), sort);
+    return customerDao.findAll(pageable).map(customer -> mapper.fromEntity(customer));
+
   }
 
 }

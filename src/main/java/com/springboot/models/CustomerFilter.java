@@ -1,18 +1,18 @@
-package com.springboot.model;
+package com.springboot.models;
 
 import org.springframework.data.domain.Sort;
 
 public class CustomerFilter {
 
   private int pageIndex;
-  private int offset;
+  private int itemsPerPage;
   private Sort customerSort;
   private CustomerFilterType type;
   private String searchQuery;
 
-  public CustomerFilter(int pageIndex, int offset) {
+  public CustomerFilter(int pageIndex, int itemsPerPage) {
     this.pageIndex = pageIndex;
-    this.offset = offset;
+    this.itemsPerPage = itemsPerPage;
   }
 
   public CustomerFilter(int pageIndex, int offset, Sort customerSort) {
@@ -24,8 +24,8 @@ public class CustomerFilter {
     return pageIndex;
   }
 
-   public int getOffset() {
-    return offset;
+   public int getItemsPerPage() {
+    return itemsPerPage;
   }
 
   public Sort getCustomerSort() {
