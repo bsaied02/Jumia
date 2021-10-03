@@ -32,44 +32,57 @@ public class CustomerController {
   @Autowired
   private PhoneValidator phoneValidator;
 
-  private static final int DEFAULT_PAGE_COUNT = 10;
+  private static final String DEFAULT_PAGE_COUNT = "10";
   private static final String DEFAULT_SORT_COLUMN = "name";
 
-  @GetMapping("/hello")
-  public String sayHello(@RequestParam(value = "myName", defaultValue = "World") String name) {
-    return String.format("Hello %s!", name);
-  }
-
-  @GetMapping("/allcustomers")
+  @GetMapping("/customers")
   public Page<CustomerModel> findAllCustomer(
-      @RequestParam(value = "page") int pageIndex,
-      @RequestParam(value = "itemsPerPage") int itemsPerPage,
+      @RequestParam(value = "page", defaultValue = "0") int pageIndex,
+      @RequestParam(value = "itemsPerPage", defaultValue = DEFAULT_PAGE_COUNT) int itemsPerPage,
       @RequestParam(value = "sortBy", required = false) String sortBy,
       @RequestParam(value = "sortDesc", required = false) boolean sortDesc,
       @RequestParam(value = "countryName", required = false) String countryNameFilter,
       @RequestParam(value = "validity", required = false) Boolean validityFilter) {
+
+    CustomerFilter filter = generateCustomerFilter(pageIndex, itemsPerPage, sortBy, sortDesc);
+
+    if (!StringUtils.isEmpty(countryNameFilter) && validityFilter != null) {
+      return customerService.getCustomersByCountryAndValidity(
+          validityFilter,
+          countryNameFilter,
+          filter);
+    }
+    if (!StringUtils.isEmpty(countryNameFilter)) {
+      return customerService.getCustomersByCountry(
+          countryNameFilter,
+          filter);
+    }
+    if (validityFilter != null) {
+      return customerService.getValidCustomers(
+          validityFilter,
+          filter);
+    }
+    return customerService.getSortedCustomers(filter);
+  }
+
+  private CustomerFilter generateCustomerFilter(
+      int pageIndex,
+      int itemsPerPage,
+      String sortBy,
+      boolean sortDesc
+  ) {
     if (pageIndex < 0) {
       LOGGER.warn("Page index must not be less than zero!");
       pageIndex = 0;
     }
     if (itemsPerPage <= 1) {
       LOGGER.warn("Page items must not be less than one!");
-      itemsPerPage = DEFAULT_PAGE_COUNT;
+      itemsPerPage = Integer.valueOf(DEFAULT_PAGE_COUNT);
     }
     Sort.Direction direction = sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC;
     String sortByColumn = StringUtils.isEmpty(sortBy) ? DEFAULT_SORT_COLUMN : sortBy;
     Sort sort = Sort.by(direction, sortByColumn);
-    CustomerFilter filter = new CustomerFilter(pageIndex - 1, itemsPerPage, sort);
-    if(!StringUtils.isEmpty(countryNameFilter) && validityFilter != null){
-     return customerService.getCustomersByCountryAndValidity(validityFilter,countryNameFilter,filter);
-    }
-    if(!StringUtils.isEmpty(countryNameFilter)) {
-     return customerService.getCustomersByCountry(countryNameFilter, filter);
-    }
-    if(validityFilter != null){
-      return customerService.getValidCustomers(validityFilter,filter);
-    }
-    return customerService.getSortedCustomers(filter);
+    return new CustomerFilter(pageIndex - 1, itemsPerPage, sort);
   }
 
   @GetMapping("/Countries")

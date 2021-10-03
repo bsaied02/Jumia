@@ -2,7 +2,7 @@ import axios from "axios";
 
 const apiClient = {
   async getCustomers(requestData) {
-    const response = await axios.get("/allcustomers",requestData);
+    const response = await axios.get("/customers",requestData);
     return response.data;
   },
   async getCountries(){
