@@ -76,12 +76,12 @@ Phones has to be categorized by matching country, country code & validity status
  1. Go to project root folder
  2. Compile & generate the JAR file : <code>mvn clean package</code>
  3. Run the generated JAR file : <code>java -jar target/jumia-services-0.0.1-SNAPSHOT.jar</code>
- 4. Access the localhost url [http://localhost:8080]
+ 4. Access [localhost url](http://localhost:8080)
 ### Docker
  1. Go to project root folder
  2. Build docker image :  <code>docker build -t customer .</code>
- 3. Run the created image on port 8080 : <code>docker run -ti -p 8080:8080 customer:</code>
- 4. Access the localhost url [http://localhost:8080]
+ 3. Run the created image on port 8080 : <code>docker run -ti -p 8080:8080 customer</code>
+ 4. Access [localhost url](http://localhost:8080)
 ### Unit tests
 Run CustomerControllerTests.java
 Run CustomerServiceTests.java
