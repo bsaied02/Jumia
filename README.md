@@ -3,8 +3,8 @@
 This a spring boot application that uses the provided database (SQLite 3) to list and categorize phone numbers.
 ## Technologies & Frameworks used for development
 
-Front end: Vue & Vuetify material.
-Back-end: Spring Boot.
+* Front end: Vue & Vuetify material.
+* Back-end: Spring Boot.
 
 ## Version info
 
