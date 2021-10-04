@@ -47,7 +47,7 @@ public class CustomerServiceImpl implements ICustomerService {
   @Override
   public Page<CustomerModel> getCustomersByCountry(@NotNull String countryName, @NotNull CustomerFilter filter) {
     Optional<CountryProperties> countryProperty = getCountryPropByCountryName(countryName);
-    if (countryProperty.isEmpty()) {
+    if (!countryProperty.isPresent()) {
       return Page.empty();
     }
     String countryCode = "(" + countryProperty.get().getCountryCode().replaceAll("[^0-9]", "") + ")";
@@ -77,7 +77,7 @@ public class CustomerServiceImpl implements ICustomerService {
       @NotNull String countryName,
       @NotNull CustomerFilter filter) {
     Optional<CountryProperties> countryProperty = getCountryPropByCountryName(countryName);
-    if (countryProperty.isEmpty()) {
+    if (!countryProperty.isPresent()) {
      return Page.empty();
     }
     List<CustomerModel> countryPage = getCustomersByCountry(countryName,filter).getContent();
@@ -87,7 +87,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
   private Optional<CountryProperties> getCountryPropByCountryName(@NotNull String countryName) {
     Optional<CountryProperties> countryProperty = phoneValidator.getCountryByCountryName(countryName);
-    if (countryProperty.isEmpty()) {
+    if (!countryProperty.isPresent()) {
       LOGGER.warn("No valid country found for country name: {}", countryName);
       return Optional.empty();
     }

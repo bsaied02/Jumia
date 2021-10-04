@@ -25,7 +25,7 @@ public class CustomerControllerTest extends AbstractBaseTest {
   @Test
   public void testFindAllCustomerWithValidParams() throws Exception {
     mockMvc.perform(MockMvcRequestBuilders
-        .get("/customers?page=1&itemsPerPage=10&sortBy=phone")
+        .get("/app/customers?page=1&itemsPerPage=10&sortBy=phone")
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.totalElements").value("5"));
@@ -34,7 +34,7 @@ public class CustomerControllerTest extends AbstractBaseTest {
   @Test(expected = org.springframework.web.util.NestedServletException.class)
   public void testFindAllCustomerWithInValidParams() throws Exception {
     mockMvc.perform(MockMvcRequestBuilders
-        .get("/customers?page=1&itemsPerPage=10&sortBy=invalid_column")
+        .get("/app/customers?page=1&itemsPerPage=10&sortBy=invalid_column")
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isBadRequest());
   }
@@ -42,7 +42,7 @@ public class CustomerControllerTest extends AbstractBaseTest {
   @Test
   public void testFindAllCustomerWithFullParams() throws Exception {
     mockMvc.perform(MockMvcRequestBuilders
-        .get("/customers?"
+        .get("/app/customers?"
             + "page=1"
             + "&itemsPerPage=10"
             + "&sortBy=name"
