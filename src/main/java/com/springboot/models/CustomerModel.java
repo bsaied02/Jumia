@@ -1,7 +1,5 @@
 package com.springboot.models;
 
-import com.springboot.entities.Customer;
-
 public class CustomerModel {
 
   private int id;

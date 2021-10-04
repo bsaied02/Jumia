@@ -2,6 +2,7 @@ package com.springboot.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
@@ -36,13 +37,12 @@ public class PhoneValidator {
   private void init() {
     try {
       ObjectMapper mapper = new ObjectMapper();
-      URL resource = ClassLoader.getSystemResource("valid-countries-regex.json");
-      File file = Paths.get(resource.toURI()).toFile();
-      List<CountryProperties> countries = mapper.readValue(file, new TypeReference<List<CountryProperties>>() {
+      InputStream inputStream = getClass().getResourceAsStream("/valid-countries-regex.json");
+      List<CountryProperties> countries = mapper.readValue(inputStream, new TypeReference<List<CountryProperties>>() {
       });
       countries.stream()
           .forEach(countryProperty -> countryPropertiesList.add(countryProperty));
-    } catch (IOException | URISyntaxException e) {
+    } catch (IOException e) {
       LOGGER.error(e.getMessage());
     }
   }

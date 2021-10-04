@@ -48,7 +48,7 @@ public class CustomerServiceImpl implements ICustomerService {
   public Page<CustomerModel> getCustomersByCountry(@NotNull String countryName, @NotNull CustomerFilter filter) {
     Optional<CountryProperties> countryProperty = getCountryPropByCountryName(countryName);
     if (countryProperty.isEmpty()) {
-      Page.empty();
+      return Page.empty();
     }
     String countryCode = "(" + countryProperty.get().getCountryCode().replaceAll("[^0-9]", "") + ")";
     return customerDao.findAllByPhoneStartingWith(countryCode, getPageableFromFilter(filter))
@@ -78,7 +78,7 @@ public class CustomerServiceImpl implements ICustomerService {
       @NotNull CustomerFilter filter) {
     Optional<CountryProperties> countryProperty = getCountryPropByCountryName(countryName);
     if (countryProperty.isEmpty()) {
-      Page.empty();
+     return Page.empty();
     }
     List<CustomerModel> countryPage = getCustomersByCountry(countryName,filter).getContent();
     return new PageImpl<>(countryPage.stream()
@@ -98,5 +98,4 @@ public class CustomerServiceImpl implements ICustomerService {
     Sort sort = Optional.ofNullable(filter.getCustomerSort()).orElse(Sort.unsorted());
     return PageRequest.of(filter.getPageIndex(), filter.getItemsPerPage(), sort);
   }
-
 }

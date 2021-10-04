@@ -37,7 +37,7 @@ public class CustomerController {
 
   @GetMapping("/customers")
   public Page<CustomerModel> findAllCustomer(
-      @RequestParam(value = "page", defaultValue = "0") int pageIndex,
+      @RequestParam(value = "page", defaultValue = "1") int pageIndex,
       @RequestParam(value = "itemsPerPage", defaultValue = DEFAULT_PAGE_COUNT) int itemsPerPage,
       @RequestParam(value = "sortBy", required = false) String sortBy,
       @RequestParam(value = "sortDesc", required = false) boolean sortDesc,
