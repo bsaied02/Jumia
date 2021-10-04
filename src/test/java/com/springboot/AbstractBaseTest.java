@@ -10,7 +10,7 @@ import com.springboot.dao.CustomerDao;
 import com.springboot.entities.Customer;
 
 @RunWith(SpringRunner.class)
-public class AbstractBaseTest {
+public abstract class AbstractBaseTest {
 
   @Autowired
   private CustomerDao customerDao;
