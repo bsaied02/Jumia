@@ -1,11 +1,7 @@
 package com.springboot.utils;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -34,6 +30,9 @@ public class PhoneValidator {
     init();
   }
 
+  /**
+   * init Country properties from JSON file
+   */
   private void init() {
     try {
       ObjectMapper mapper = new ObjectMapper();

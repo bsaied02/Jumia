@@ -15,7 +15,12 @@ import com.springboot.entities.Customer;
 @Repository
 public interface CustomerDao extends JpaRepository<Customer, Integer> {
 
-
+  /**
+   * find all customers that has phone starting with specific query
+   * @param query String query matches the beginning characters of phone column
+   * @param pageable Pageable for limiting the data returned
+   * @return Page of customers
+   */
   Page<Customer> findAllByPhoneStartingWith(String query,Pageable pageable);
 
   //Regex is not supported at spring jpa

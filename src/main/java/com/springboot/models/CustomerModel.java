@@ -1,5 +1,8 @@
 package com.springboot.models;
 
+/**
+ * DTO model
+ */
 public class CustomerModel {
 
   private int id;

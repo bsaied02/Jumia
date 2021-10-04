@@ -1,5 +1,8 @@
 package com.springboot.models;
 
+/**
+ * Model representing the country properties
+ */
 public class CountryProperties {
 
   private String country;

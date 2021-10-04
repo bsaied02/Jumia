@@ -2,6 +2,9 @@ package com.springboot.models;
 
 import org.springframework.data.domain.Sort;
 
+/**
+ * Model representing the data filter passes to the service
+ */
 public class CustomerFilter {
 
   private int pageIndex;
