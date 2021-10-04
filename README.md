@@ -67,7 +67,7 @@ Phones has to be categorized by matching country, country code & validity status
 ## Enhancement plan for existing code
 
 * Security & validation enhancements.
-* Use validation filtering at database retrieval.
+* Use validation filtering at database retrieval (by trying to overwrite QueryBuilder used to support the regex keyword).
 * Add search feature at the front-end.
 * Add logback.xml file
 
